@@ -134,14 +134,28 @@ if __name__ == "__main__":
     if not os.path.exists(folder_cache):
         os.makedirs(folder_cache, exist_ok=True)
 
-    # Determine if folder mode should be used
-    folder_mode = args.folder is not None
-
-    scraper = NateeScraper(args.uid, args.password, folder_mode=folder_mode)
-
     if args.folder:
+        # If the folder is provided, skip login entirely
+        scraper = NateeScraper(folder_mode=True)
         scraper.create_testcase(args.cpp_path, folder_path=args.folder)
-    elif args.quiz_testcase_link:
-        scraper.create_testcase(args.cpp_path, quiz_testcase_link=args.quiz_testcase_link)
     else:
-        raise ValueError("Either --folder or --quiz_testcase_link must be provided")
+        # Check if the uid and password are provided or cached
+        if args.uid is not None and args.password is not None:
+            # Cache uid and password if provided
+            json.dump({'uid': args.uid, 'password': args.password}, open(usr_cache, 'w'), indent=4)
+            print("Cached usr data at:", usr_cache)
+
+        notice = "Please provide username and password via --uid and --password flag"
+        if not os.path.exists(usr_cache):
+            raise ValueError(notice)
+
+        # Load cached credentials
+        usr_cache = json.load(open(usr_cache, 'r'))
+        if usr_cache['uid'] is None or usr_cache['password'] is None:
+            raise ValueError(notice)
+        else:
+            args.uid = usr_cache['uid']
+            args.password = usr_cache['password']
+
+        scraper = NateeScraper(args.uid, args.password)
+        scraper.create_testcase(args.cpp_path, args.quiz_testcase_link)
