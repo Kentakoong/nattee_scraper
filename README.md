@@ -45,9 +45,9 @@ sudo chmod 755 ./build.sh # Give Execute Permission (for macos and linux only!)
 ### Execution Command
 ```bash
 # 1st time
-executable [path/to/file.cpp] [url] --uid [your_login_uid] --password [your_login_password]
+executable [path/to/file.cpp] --quiz_testcase_link [url] --uid [your_login_uid] --password [your_login_password]
 # 2nd time
-executable [path/to/file.cpp] [url] # no need to type uid and password again
+executable [path/to/file.cpp] --quiz_testcase_link [url] # no need to type uid and password again
 ```
 - password and uid will be cached temporarily in your system cache(temp) folder so you don't have to retype it again
 - if you want to change your uid or password, just use the full command again with the new uid and password
@@ -57,12 +57,12 @@ executable [path/to/file.cpp] [url] # no need to type uid and password again
 ### Python installation Example
 ```bash
 # python installation
-python ntscraper.py ./file.cpp https://2110104.nattee.net/submissions/direct_edit_problem/1307 --uid 66778899 --password 12345678
+python ntscraper.py ./file.cpp --quiz-testcase-link https://2110104.nattee.net/submissions/direct_edit_problem/1307 --uid 66778899 --password 12345678
 ```
 ### Binary installation Example
 ```bash
 # binary installation
-ntscraper ./file.cpp https://2110104.nattee.net/testcases/show_problem/1307 --uid 66778899 --password 12345678
+ntscraper ./file.cpp --quiz_testcase_link https://2110104.nattee.net/testcases/show_problem/1307 --uid 66778899 --password 12345678
 ```
 <details>
 <summary>command not found: ntscraper ?</summary>
